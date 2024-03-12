@@ -1,0 +1,101 @@
+def agregar_producto(inventario):#función para agregrar productos
+    while True:
+        try:
+            id = int(input("Ingrese el ID del producto: "))#se solicita ID del producto
+            if inventario.buscar_producto(id) is not None:#si el ID no se encuentra vacío el programa permite hacer el ingreso
+                print("\n***** ID de producto ya existente. Intente nuevamente.*****\n")# si el ID se encuentra indica que el producto ya existe.
+                continue
+            break
+        except ValueError:
+            print("\n***** El ID del producto debe ser un número entero.*****")#esta excepción evita que se ingresen numeros decimales en el ID
+
+    nombre = input("Ingrese el nombre del producto: ")#solicitud de información del producto a ingresar
+    descripcion = input("Ingrese la descripción del producto: ")#solicitud de información del producto a ingresar
+
+    while True:
+        try:
+            cantidad = int(input("Ingrese la cantidad del producto: "))#solicitud de información del producto a ingresar
+            if cantidad < 0:
+                print("\n***** La cantidad del producto no puede ser negativa. Intente nuevamente.*****")#mensaje de error en caso de que se ingrese una cantidad negativa
+                continue
+            break
+        except ValueError:
+            print("\n***** La cantidad del producto debe ser un número entero.***** ")#excepción que evita que se ingresen cantidades en decimales
+
+    while True:
+        try:
+            precio = float(input("Ingrese el precio del producto en CLP: "))#solicitud de información del producto a ingresar
+            if precio < 0:
+                print("\n***** El precio del producto no puede ser negativo. Intente nuevamente.*****")#mensaje que se da cuando se ingresa valor del producto en negativo
+                continue
+            break
+        except ValueError:#el valor permite ingreso de numeros decimales
+            print("\n***** El precio del producto debe ser un número decimal.*****")
+
+    producto = Producto(id, nombre, descripcion, cantidad, precio)#se instancia un producto
+    inventario.agregar_producto(producto)#se agrega el producto al inventario
+    print("\n***** Producto agregado al inventario correctamente.*****")#mensaje de que se agregó correctamente el producto
+
+
+def main():#función principal donde se usa el inventario
+    inventario = Inventario()
+
+    while True:#se le da un listado de opciones al usuario para que use el inventario
+        print("\n**Menú de gestión de inventario**\n")
+        print("1. Agregar producto")
+        print("2. Eliminar producto")
+        print("3. Actualizar producto")
+        print("4. Buscar producto")
+        print("5. Listar productos")
+        print("6. Salir\n")
+
+        opcion = int(input("Ingrese una opción: "))#se pide al usuario que elija una opción
+
+        if opcion == 1:#se llama a la función
+            agregar_producto(inventario)
+
+        elif opcion == 2:
+            try:
+                id = int(input("Ingrese el ID del producto a eliminar: "))#se pide al usuario qu ingrese un ID
+                inventario.eliminar_producto(id)#se llama a la función de la clase inventario
+            except ValueError as e:#excecpción para encontrar errores
+                print(e)
+
+        elif opcion == 3:
+            try:
+                id = int(input("Ingrese el ID del producto a actualizar: "))#solicitud de información del producto a ingresar
+                nombre = input("Ingrese el nuevo nombre del producto: ")#solicitud de información del producto a ingresar
+                descripcion = input("Ingrese la nueva descripción del producto: ")#solicitud de información del producto a ingresar
+                cantidad = int(input("Ingrese la nueva cantidad del producto: "))#solicitud de información del producto a ingresar
+                precio = float(input("Ingrese el nuevo precio del producto en CLP:"))#solicitud de información del producto a ingresar
+
+                inventario.actualizar_producto(id, nombre, descripcion, cantidad, precio)#se indica al inventario que actualice la informaicón con los datos entregados
+            except ValueError as e:
+                print(e)
+
+        elif opcion == 4:
+            try:
+                id = int(input("Ingrese el ID del producto a buscar: "))#solicitud de ID del producto a buscar
+                producto = inventario.buscar_producto(id)#se llama a la funcion para buscar un producto por su ID
+                if producto is not None:#si el ID de producto existe se continua imprimiendo la siguiente información por pantalla
+                    print(f"ID: {producto.get_id()}")
+                    print(f"Nombre: {producto.get_nombre()}")
+                    print(f"Descripción: {producto.get_descripcion()}")
+                    print(f"Cantidad: {producto.get_cantidad()}")
+                    print(f"Precio: {producto.get_precio()}")
+                else:
+                    print(f"\n*****Producto con ID {id} no encontrado*****")#mensaje en caso de que el ID no exista por lo que no se enceuntra el porducto
+            except ValueError as e:
+                    print(e)
+
+        elif opcion == 5:#funcion que llama a listar los productos
+            inventario.listar_productos()
+
+        elif opcion == 6:
+            break
+
+        else:
+          print("*****Opción no válida.*****")
+
+if __name__ == "__main__":
+    main()
