@@ -1,0 +1,38 @@
+#Creación de clase producto con métodos getters y setter para obtener y modificar los atributos de la clase producto
+class Producto:
+    def __init__(self, id, nombre, descripcion, cantidad, precio):
+        self.id = id
+        self.nombre = nombre
+        self.descripcion = descripcion
+        self.cantidad = cantidad
+        self.precio = precio
+
+    def get_id(self):
+        return self.id
+
+    def set_id(self, id):
+        self.id = id
+
+    def get_nombre(self):
+        return self.nombre
+
+    def set_nombre(self, nombre):
+        self.nombre = nombre
+
+    def get_descripcion(self):
+        return self.descripcion
+
+    def set_descripcion(self, descripcion):
+        self.descripcion = descripcion
+
+    def get_cantidad(self):
+        return self.cantidad
+
+    def set_cantidad(self, cantidad):
+        self.cantidad = cantidad
+
+    def get_precio(self):
+        return self.precio
+
+    def set_precio(self, precio):
+        self.precio = precio
